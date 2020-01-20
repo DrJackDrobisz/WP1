@@ -1,1 +1,1 @@
-Introductory web programming course to HTML/CSS/JavaScript.
+Introductory web programming course in HTML/CSS/JavaScript.
