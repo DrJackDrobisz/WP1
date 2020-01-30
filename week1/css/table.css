@@ -20,15 +20,15 @@
 
 #hname {
     font-style: italic;
-    background-color: rgb(238, 119, 119);
+    background-color: rgb(238, 180, 180);
 }
 
 #hsite {
     font-style: italic;
-    background-color: rgb(126, 231, 126);
+    background-color: rgb(158, 240, 158);
 }
 
 #hcode {
     font-style: italic;
-    background-color: rgb(130, 130, 233);
+    background-color: rgb(116, 116, 235);
 }

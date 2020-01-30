@@ -45,7 +45,7 @@ body, html {
 }
 
 #main-2 {
-    float:right;
+    float:left;
     width:48%;
     padding:1%;
     background:#50869e;
