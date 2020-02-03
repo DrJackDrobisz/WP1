@@ -16,10 +16,11 @@ div {
     height: 10%;
     padding:5px 10px;
     position: relative;
-    background-color: #659DBD);
+    background-color: #659DBD;
 }
 
 .nav {
+    text-align: center;
     width: 100%;
     height: 10%;
     padding:5px 10px;
