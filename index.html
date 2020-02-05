@@ -1,3 +1,4 @@
+<!-- Original example pulled from Codepen by Matt Smith -->
 <html>
     <head>
         <title>Web Programming One</title>
@@ -5,58 +6,63 @@
         <link rel="stylesheet" type="text/css" href="css/table.css"> 
     </head>
     <body>
-        <h1>Welcome to Web Programming 1</h1>
+        <h2>Welcome to Web Programming 1</h2>
         <a href="assets/dev_env_instruct.pdf">Instructions for setting up development environment.</a>
         <br>
         <br>
-        <div class="tbody"> 
-            <div class="trow">
-                <div class="tcell" id="hname">Student</div>
-                <div class="tcell" id="hsite">Github Website</div>
-                <div class="tcell" id="hcode">GitHub Code</div>
-            </div>
-            <div class="trow">
-                <div class="tcell">Amanda</div>
-                <div class="tcell"><a href="https://amandanfye.github.io/6930AmandaFye/First%20Webpage/">6930AmandaFye/First Page</a></div>
-                <div class="tcell"><a href="https://github.com/amandanfye">6930amandanfye</a></div>
-            </div>
-            <div class="trow">
-                <div class="tcell">Cynthia</div>
-                <div class="tcell"><a href="https://cynthiajweaver.github.io/Web-Programming-One/Wk.0.html">Web-Programming-One/Wk.0.html</a></div>
-                <div class="tcell"><a href="https://github.com/cynthiajweaver">cynthiajweaver</a></div>
-            </div>
-            <div class="trow">
-                <div class="tcell">Diane</div>
-                <div class="tcell"><a href="https://daustin724.github.io/practice/2020su4s.html">practice/2020su4s.html</a></div>
-                <div class="tcell"><a href="https://github.com/daustin724">daustin724</a></div>
-            </div>
-            <div class="trow">
-                <div class="tcell">Eric</div>
-                <div class="tcell"><a href="https://wildwings85.github.io/WebProgOne/">WebProgOne</a></div>
-                <div class="tcell"><a href="https://github.com/Wildwings85">Wildwings85</a></div>
-            </div>
-            <div class="trow">
-                <div class="tcell">Lott</div>
-                <div class="tcell"><a href="https://lott-kerby.github.io/WebProgrammingOne/">WebProgrammingOne</a></div>
-                <div class="tcell"><a href="https://github.com/lott-kerby">Lott-Kerby</a></div>
-            </div>
-            <div class="trow">
-                <div class="tcell">Lynn</div>
-                <div class="tcell"><a href="https://lwerre.github.io/WP1/">WP1</a></div>
-                <div class="tcell"><a href="https://github.com/lwerre">lwerre</a></div>
-            </div>
-            <div class="trow">
-                <div class="tcell">Sangeeta</div>
-                <div class="tcell"><a href="https://sangeeta12136.github.io/webpageone/">webpageone</a></div>
-                <div class="tcell"><a href="https://github.com/sangeeta12136">Sangeeta12136</a></div>
-            </div>
-            <div class="trow">
-                <div class="tcell">Stephanie</div>
-                <div class="tcell"><a href="https://stephanienfenton.github.io/WebProOne/">WebProOne</a></div>
-                <div class="tcell"><a href="https://github.com/stephanienfenton">stephanienfenton</a></div>
-            </div>
-        </div>
+        <table>
+            <caption>Class Roster</caption>
+            <thead>
+                <tr>
+                    <th id="th1">Student</th>
+                    <th id="th2">Github Website</th>
+                    <th id="th3">GitHub Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tcname">Amanda</td>
+                    <td class="tcwebs"><a href="https://amandanfye.github.io/6930AmandaFye/">6930AmandaFye</a></td>
+                    <td class="tcgith"><a href="https://github.com/amandanfye">6930amandanfye</a></td>
+                </tr>
+                <tr>
+                    <td class="tcname">Cynthia</td>
+                    <td class="tcwebs"><a href="https://cynthiajweaver.github.io/Web-Programming-One/">Web-Programming-One</a></td>
+                    <td class="tcgith"><a href="https://github.com/cynthiajweaver">cynthiajweaver</a></td>
+                </tr>
+                <tr>
+                    <td class="tcname">Diane</td>
+                    <td class="tcwebs"><a href="https://daustin724.github.io/practice/">practice</a></td>
+                    <td class="tcgith"><a href="https://github.com/daustin724">daustin724</a></td>
+                </tr>
+                <tr>
+                    <td class="tcname">Eric</td>
+                    <td class="tcwebs"><a href="https://wildwings85.github.io/WebProgOne/">WebProgOne</a></td>
+                    <td class="tcgith"><a href="https://github.com/Wildwings85">Wildwings85</a></td>
+                </tr>
+                <tr>
+                    <td class="tcname">Lott</td>
+                    <td class="tcwebs"><a href="https://lott-kerby.github.io/WebProgrammingOne/">WebProgrammingOne</a></td>
+                    <td class="tcgith"><a href="https://github.com/lott-kerby">Lott-Kerby</a></td>
+                </tr>
 
+                <tr>
+                    <td class="tcname">Lynn</td>
+                    <td class="tcwebs"><a href="https://lwerre.github.io/WP1/">WP1</a></td>
+                    <td class="tcgith"><a href="https://github.com/lwerre">lwerre</a></td>
+                </tr>
+                <tr>
+                    <td class="tcname">Sangeeta</td>
+                    <td class="tcwebs"><a href="https://sangeeta12136.github.io/webpageone/">webpageone</a></td>
+                    <td class="tcgith"><a href="https://github.com/sangeeta12136">Sangeeta12136</a></td>
+                </tr>
+                <tr>
+                    <td class="tcname">Stephanie</td>
+                    <td class="tcwebs"><a href="https://stephanienfenton.github.io/WebProOne/">WebProOne</a></td>
+                    <td class="tcgith"><a href="https://github.com/stephanienfenton">stephanienfenton</a></td>
+                </tr>
+            </tbody>      
+        </table> 
     </body>
 </html>
 
