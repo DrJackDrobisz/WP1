@@ -1,0 +1,131 @@
+body {
+    width: 100%;
+    background-color: rgb(38, 168, 243);
+    font-family: "bad script," dosis, arial, verdana, "times new roman";
+    font-size: 18px;
+}
+
+h2 {
+    text-align: center;
+    color: darkred;
+    font-family: "permanent marker," verdana, arial, "times new roman";
+}
+
+p {
+    color: navy;
+    font-family: "old standard TT,""times new roman," verdana, arial;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    color: navy;
+    font-family: "bad script," "times new roman," verdana, arial;
+}
+
+.responsive_image {
+    width: 100%;
+    height: auto;
+}
+
+.responsive_image2 {
+    width: 100%;
+    height: auto;
+}
+
+#nav {
+    text-align: center;
+    background-color: rgb(121, 237, 245); 
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+}
+
+#nav a:link, a:visited {
+    background-color: #5f7dcf;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+#nav a:hover, a:active {
+    background-color: rgb(228, 167, 170);
+}
+
+#container {
+    text-align: center;
+}
+
+#education {
+    text-align: center;
+    background-color:rgb(230, 223, 223);
+    padding: 5px;
+}
+
+#person {
+    background-color: rgb(89, 243, 210);
+    border: 2px solid rgb(7, 87, 67);
+    padding: 5px;
+}
+
+#footer {
+    text-align: center;
+}
+
+@media only screen and (min-width: 758px) {
+    .responsive_image {
+        max-height: 240px;
+    }
+
+    .responsive_image2 {
+        max-width: 240px;
+    }
+
+    #container {
+        height: 60%;
+    }
+
+    #education {
+        float: left;
+        width: 59%;
+        height: 100%;
+        padding: 0px;
+    }
+
+    #education-background {
+        width: 45%;
+        float: left;
+    }
+    
+    #education-interest {
+        width: 45%;
+        float: left;
+    }
+
+    #person {
+        float: left;
+        width: 39%;
+        height: 100%;
+        padding: 0px;
+    }
+
+    #person-image {
+        max-width: 40%;
+        padding: 10px;
+        float: left;
+    }
+
+    #person-text {
+        padding-left: 10px;
+    }
+    #person-text p {
+        text-align: left;
+    }
+
+    #footer {
+        clear: both;
+    }
+}
