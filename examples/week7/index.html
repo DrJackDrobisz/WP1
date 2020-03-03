@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Week 7</title>
+
+    <style>
+        #container {
+            margin-top: 10%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        #output {
+            margin-top: 2%;
+            font-size: large;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+    <script>
+        // Object class prototype
+        function Patient(fm) {
+            this.name = fm.name.value;
+            this.email = fm.email.value;
+            this.age = Number(fm.age.value);
+            this.risk1 = fm.risk1.checked;
+            this.risk2 = fm.risk2.checked;
+            this.symptom1 = fm.symptom1.checked;
+            this.symptom2 = fm.symptom2.checked;
+            this.symptom3 = fm.symptom3.checked;
+
+            // return color
+            this.severity = function() {
+                if (this.age < 26) {
+                    return "#caeeca"; // green
+                } else if (this.age < 65) {
+                    return "#f1f0a3"; // yellow
+                } else {
+                    return "#e99883"; // red
+                }
+                
+            }
+            // return message
+            this.diagnose = function() {
+                // NOTE: develop this logic further...
+
+                if (this.age > 50 ) {
+                    return "Contact your doctor immediately!";
+                } else {
+                    return "Take an aspirin and go to bed.";
+                }
+            }
+        }
+
+        function process_form() {
+            // get form object
+            var fm = document.getElementById("my_form");
+            // instantiate new Patient
+            var patient = new Patient(fm);
+            // get output object
+            var out = document.getElementById("output");
+            // set output background color
+            out.style.background = patient.severity();
+            // output diagnosis
+            out.innerHTML = patient.diagnose();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Week 7</h1>
+
+        <form id="my_form">
+            <!-- biodem -->
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+            </div>
+            <div class="form-group">
+                <label for="age">What is your age group?</label>
+                <select class="form-control" id="age">
+                    <option value="1">1-12 years old</option>
+                    <option value=13>13-25 years old</option>
+                    <option value="26">26-40 years old</option>
+                    <option value="41">41-64 years old</option>
+                    <option value="65">65 years old and over</option>
+                </select>
+            </div>
+            <!-- risk factors -->
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="risk1">
+                <label class="form-check-label" for="risk1">I have traveled recently outside of US.</label>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="risk2">
+                <label class="form-check-label" for="risk2">I had contact with COVID-19 patient.</label>
+            </div>
+            <!-- symptoms -->
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="symptom1">
+                <label class="form-check-label" for="symptom1">I have fever</label>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="symptom2">
+                <label class="form-check-label" for="symptom2">I have bad cough</label>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="symptom3">
+                <label class="form-check-label" for="symptom3">I have shortness of breath</label>
+            </div>
+
+            <button type="button" class="btn btn-primary" onClick="process_form()">Submit</button>
+        </form>
+        <div id="output">
+
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
