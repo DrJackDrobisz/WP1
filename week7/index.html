@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-
+<!-- this is week 7 in-class example of JS object implementation, forms, bootstrap, etc. -->
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -17,44 +17,64 @@
             margin-left: 10%;
             margin-right: 10%;
         }
-
+        /* using CSS box model */
         #output {
+            border: 15px;
+            padding: 20px;
+            margin: 20px;
             margin-top: 1%;
             text-align: center;
             font-size: x-large;
         }
     </style>
     <script>
+        // Patient Object definition
         function Patient(fm) {
             // constructor
             this.name = fm.name.value;
             this.email = fm.email.value;
             this.age = Number(fm.age.value);
-            this.symptom1 = fm.symptom1.checked;
-            this.symptom2 = fm.symptom2.checked;
-            this.symptom3 = fm.symptom3.checked;
-            this.risk1 = fm.risk1.checked;
-            this.risk2 = fm.risk2.checked;
+            this.symptom1 = fm.symptom1.checked; // fever
+            this.symptom2 = fm.symptom2.checked; // cough
+            this.symptom3 = fm.symptom3.checked; // breath
+            this.risk1 = fm.risk1.checked; // travel
+            this.risk2 = fm.risk2.checked; // contact
 
-            // return color
+            // return potential severity color of this case
             this.severity = function () {
-                if (this.age < 26) {
-                    return "#caeeca"; // green
-                } else if (this.age < 65) {
-                    return "#f1f0a3"; // yellow
-                } else {
-                    return "#e99883"; // red
+                // if all three symptoms and any one of risk factors are present
+                if (this.symptom1 && this.symptom2 && this.symptom3 && (this.risk1 || this.risk2)) {
+                    return "#e99883"; // high red
+                // if all three symptoms are present but NOT the risk factors
+                } else if (this.symptom1 && this.symptom2 && this.symptom3 && !(this.risk1 || this.risk2)) {
+                    return "#f1f0a3"; // medium yellow
+                // if any of the symptoms are present
+                } else if (this.symptom1 || this.symptom2 || this.symptom3) {
+                    return "#caeeca"; // low green
+                } else { // gray
+                    return "#dddddd";
                 }
             }
-
+            // return recommendation text
             this.diagnose = function () {
-                if (!this.symptom1) {
-                    return "Since you don't have fever, you are probably all right.";
-                }
-                if ((this.symptom2 || this.symptom3) && (this.risk1 || this.risk2)) {
-                    return ("Stay home and contact the COVID-19 hotline immediately!")
-                } else {
-                    return "Take an aspirin and get some sleep.";
+                // if all three symptoms and any one of the risk factors are present
+                if (this.symptom1 && this.symptom2 && this.symptom3 && (this.risk1 || this.risk2)) {
+                    if (this.age == 65) { // elderly are at much higher risk
+                        return "Call your local emergency services immediately!";
+                    } else {
+                        return "Call the CDC COVID-19 hotline at 555-555-5555 immediately!";
+                    }
+                // if all three symptoms are present but NOT risk factors
+                } else if (this.symptom1 && this.symptom2 && this.symptom3 && !(this.risk1 || this.risk2)) {
+                    return "Stay home and monitor your symptoms. If they get any worse then contact your physician.";              
+                // if any of the symptoms are present and they have any risk factors
+                } else if ((this.symptom1 || this.symptom2 || this.symptom3) && (this.risk1 || this.risk2) ) {
+                    return "PLEASE STAY HOME! If you get any more symptoms then contact the CDC COVID-19 hotline at 555-555-5555!";
+                // if they have ANY symptoms at all
+                } else if (this.symptom1 || this.symptom2 || this.symptom3) {
+                    return "If you get any more symptoms or if your current symptoms get worse then contact your physician.";       
+                } else { // low virus threat
+                    return "You seem to be fine.  Keep washing your hands!";
                 }
             }
 
@@ -67,22 +87,21 @@
             var out = document.getElementById("output");
             // instantiate patient object
             var patient = new Patient(fm);
-            // set out background color using object method
-            out.style.background = patient.severity();
-            out.innerHTML = patient.diagnose();
-
             //console.log("Debug:" + JSON.stringify(patient));
+
+            // set background color using patient object severity method
+            out.style.background = patient.severity();
+            // display recommendations based on input values using diagnose method
+            out.innerHTML = patient.diagnose();
         }
-
     </script>
-
 </head>
 
 <body>
     <div id="container">
-        <h1>COVID-19 Informational Page</h1>
+        <h1>COVID-19 Informational Page Example</h1>
         <form id="my_form">
-            <!-- biodem -->
+            <!-- individual info -->
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name">
@@ -109,29 +128,28 @@
             <br>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="symptom1">
-                <label class="form-check-label" for="symptom1">Fever</label>
+                <label class="form-check-label" for="symptom1">I have fever.</label>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="symptom2">
-                <label class="form-check-label" for="symptom2">Cough</label>
+                <label class="form-check-label" for="symptom2">I am coughing.</label>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="symptom3">
-                <label class="form-check-label" for="symptom3">Shortness of breath</label>
+                <label class="form-check-label" for="symptom3">I have shortness of breath.</label>
             </div>
             <!-- risk assessment -->
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="risk1">
-                <label class="form-check-label" for="risk1">Have you traveled by airplane recently?</label>
+                <label class="form-check-label" for="risk1">I recently traveled by airplane.</label>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="risk2">
-                <label class="form-check-label" for="risk2">Have you recently had any contact with a COVID-19
-                    patient?</label>
+                <label class="form-check-label" for="risk2">I recently had contact with a COVID-19 patient.</label>
             </div>
 
             <button type="button" class="btn btn-primary" onclick="process_form()">Submit</button>
-            <!-- recommendation area -->
+            <!-- recommendation output area -->
             <div id="output">
 
             </div>
