@@ -70,7 +70,7 @@
                     }
                 // if all three symptoms are present but NOT risk factors
                 } else if (this.symptom1 && this.symptom2 && this.symptom3 && !(this.risk1 || this.risk2)) {
-                    return "Stay home and monitor your symptoms. If they get any worse then contact your physician.";              
+                    return "Stay home and monitor your symptoms. Contact your physician if the symptoms persist.";              
                 // if any of the symptoms are present and they have any risk factors
                 } else if ((this.symptom1 || this.symptom2 || this.symptom3) && (this.risk1 || this.risk2) ) {
                     return "PLEASE STAY HOME! If you get any more symptoms then contact the CDC COVID-19 hotline at 555-555-5555!";
