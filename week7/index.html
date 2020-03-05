@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Week 7</title>
+    <style>
+        #container {
+            margin-top: 5%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        #output {
+            margin-top: 1%;
+            text-align: center;
+            font-size: x-large;
+        }
+    </style>
+    <script>
+        function Patient(fm) {
+            // constructor
+            this.name = fm.name.value;
+            this.email = fm.email.value;
+            this.age = Number(fm.age.value);
+            this.symptom1 = fm.symptom1.checked;
+            this.symptom2 = fm.symptom2.checked;
+            this.symptom3 = fm.symptom3.checked;
+            this.risk1 = fm.risk1.checked;
+            this.risk2 = fm.risk2.checked;
+
+            // return color
+            this.severity = function () {
+                if (this.age < 26) {
+                    return "#caeeca"; // green
+                } else if (this.age < 65) {
+                    return "#f1f0a3"; // yellow
+                } else {
+                    return "#e99883"; // red
+                }
+            }
+
+            this.diagnose = function () {
+                if (!this.symptom1) {
+                    return "Since you don't have fever, you are probably all right.";
+                }
+                if ((this.symptom2 || this.symptom3) && (this.risk1 || this.risk2)) {
+                    return ("Stay home and contact the COVID-19 hotline immediately!")
+                } else {
+                    return "Take an aspirin and get some sleep.";
+                }
+            }
+
+        }
+
+        function process_form() {
+            // get form object
+            var fm = document.getElementById("my_form");
+            // get output object
+            var out = document.getElementById("output");
+            // instantiate patient object
+            var patient = new Patient(fm);
+            // set out background color using object method
+            out.style.background = patient.severity();
+            out.innerHTML = patient.diagnose();
+
+            //console.log("Debug:" + JSON.stringify(patient));
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <div id="container">
+        <h1>COVID-19 Informational Page</h1>
+        <form id="my_form">
+            <!-- biodem -->
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <select class="form-control" id="age">
+                    <option value="0">Please select your age category</option>
+                    <option value="1">1-12 years old</option>
+                    <option value="13">13-25 years old</option>
+                    <option value="26">26-40 years old</option>
+                    <option value="41">41-64 years old</option>
+                    <option value="65">65 and older</option>
+                </select>
+            </div>
+            <!-- symptoms -->
+            <h4>Please check all that apply:</h4>
+            <br>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="symptom1">
+                <label class="form-check-label" for="symptom1">Fever</label>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="symptom2">
+                <label class="form-check-label" for="symptom2">Cough</label>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="symptom3">
+                <label class="form-check-label" for="symptom3">Shortness of breath</label>
+            </div>
+            <!-- risk assessment -->
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="risk1">
+                <label class="form-check-label" for="risk1">Have you traveled by airplane recently?</label>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="risk2">
+                <label class="form-check-label" for="risk2">Have you recently had any contact with a COVID-19
+                    patient?</label>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="process_form()">Submit</button>
+            <!-- recommendation area -->
+            <div id="output">
+
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
