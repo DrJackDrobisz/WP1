@@ -18,12 +18,14 @@
             margin-left: 10%;
             margin-right: 10%;
         }
+
         /* using CSS box model */
         #details {
             height: 50px;
             text-align: center;
             font-size: medium;
         }
+
         /* using CSS box model */
         #output {
             border: 15px;
@@ -35,10 +37,19 @@
         }
     </style>
     <script>
-        var symptoms = new Array(); // this is a global variable
+        var symptoms = new Array(); // this is a global variable for symptom defnitions
+        var risks = new Array(); // this is a global array for risk factor definitions
 
         // Symptom Object definition
         function Symptom(id, weight, name, label, description) {
+            this.id = id;
+            this.weight = weight;
+            this.name = name;
+            this.label = label;
+            this.description = description;
+        }
+        // Risk Object definition
+        function Risk(id, weight, name, label, description) {
             this.id = id;
             this.weight = weight;
             this.name = name;
@@ -54,9 +65,9 @@
             this.name = fm.name.value;
             this.email = fm.email.value;
             this.age = Number(fm.age.value);
-            this.symptom['fever'] = fm.symptom1.checked; // fever
-            this.symptom['cough'] = fm.symptom2.checked; // cough
-            this.symptom['breath'] = fm.symptom3.checked; // breath
+            this.symptom[0] = fm.symptom1.checked; // fever
+            this.symptom[1] = fm.symptom2.checked; // cough
+            this.symptom[2] = fm.symptom3.checked; // breath
             this.risk[0] = fm.risk1.checked; // travel
             this.risk[1] = fm.risk2.checked; // contact
             //console.log(this.symptom);
@@ -64,13 +75,13 @@
             // return potential severity color of this case
             this.severity = function () {
                 // if all three symptoms and any one of risk factors are present
-                if (this.symptom['fever'] && this.symptom['cough'] && this.symptom['breath'] && (this.risk[0] || this.risk[1])) {
+                if (this.symptom[0] && this.symptom[1] && this.symptom[2] && (this.risk[0] || this.risk[1])) {
                     return "#e99883"; // high red
                     // if all three symptoms are present but NOT the risk factors
-                } else if (this.symptom['fever'] && this.symptom['cough'] && this.symptom['breath'] && !(this.risk[0] || this.risk[1])) {
+                } else if (this.symptom[0] && this.symptom[1] && this.symptom[2] && !(this.risk[0] || this.risk[1])) {
                     return "#f1f0a3"; // medium yellow
                     // if any of the symptoms are present
-                } else if (this.symptom['fever'] || this.symptom['cough'] || this.symptom['breath']) {
+                } else if (this.symptom[0] || this.symptom[1] || this.symptom[2]) {
                     return "#caeeca"; // low green
                 } else { // gray
                     return "#dddddd";
@@ -79,30 +90,46 @@
             // return recommendation text
             this.diagnose = function () {
                 // if NONE of symptoms are present but they have been potentially exposed
-                if (!(this.symptom1 || this.symptom2 || this.symptom3) && this.risk2) {
+                if (!(this.symptom[0] || this.symptom[1] || this.symptom[2]) && this.risk[1]) {
                     return "You do not show any symptoms, however, if you suspect that you might have been exposed to COVID-19 then please contact your local authories or call the CDC COVID-19 hotline at 555-555-5555.";
                 }
                 // if all three symptoms and any one of the risk factors are present
-                if (this.symptom1 && this.symptom2 && this.symptom3 && (this.risk1 || this.risk2)) {
+                if (this.symptom[0] && this.symptom[1] && this.symptom[2] && (this.risk[0] || this.risk[1])) {
                     if (this.age == 65) { // elderly are at much higher risk
                         return "Call your local emergency services immediately!";
                     } else {
                         return "Call the CDC COVID-19 hotline at 555-555-5555 immediately!";
                     }
                     // if all three symptoms are present but NOT risk factors
-                } else if (this.symptom1 && this.symptom2 && this.symptom3 && !(this.risk1 || this.risk2)) {
+                } else if (this.symptom[0] && this.symptom[1] && this.symptom[2] && !(this.risk[0] || this.risk[1])) {
                     return "Stay home and monitor your symptoms. Contact your physician if the symptoms persist.";
                     // if any of the symptoms are present and they have any risk factors
-                } else if ((this.symptom1 || this.symptom2 || this.symptom3) && (this.risk1 || this.risk2)) {
+                } else if ((this.symptom[0] || this.symptom[1] || this.symptom[2]) && (this.risk[0] || this.risk[1])) {
                     return "PLEASE STAY HOME! If you get any more symptoms then contact the CDC COVID-19 hotline at 555-555-5555!";
                     // if they have ANY symptoms at all (but not risk factors)
-                } else if (this.symptom1 || this.symptom2 || this.symptom3) {
+                } else if (this.symptom[0] || this.symptom[1] || this.symptom[2]) {
                     return "If you get any more symptoms or if your current symptoms get worse then contact your physician.";
                 } else { // low virus threat
                     return "You seem to be fine.  Keep washing your hands!";
                 }
             }
-
+            // return patient potential threat score (real number)
+            this.score = function () {
+                var score_s = 0.0;
+                var score_r = 0.0;
+                for (var x = 0; x < symptoms.length; x++) {
+                    if (this.symptom[x]) {
+                        score_s += Number(symptoms[x].weight);
+                    }
+                }
+                for (var x = 0; x < risks.length; x++) {
+                    if (this.risk[x]) {
+                        score_r += Number(risks[x].weight);
+                    }
+                }
+                console.log("DEBUG: score_s=" + score_s + " score_r=" + score_r);
+                return score_s + score_r;
+            }
         }
 
         function process_form() {
@@ -118,6 +145,7 @@
             out.style.background = patient.severity();
             // display recommendations based on input values using diagnose method
             out.innerHTML = patient.diagnose();
+            var score = patient.score();
         }
 
         // load symptom data from the xml file
@@ -137,17 +165,49 @@
                         symptoms.push(symptom); // symptoms is defined under a global scope
                     }
                     console.log(symptoms);
+                    var rk = this.responseXML.getElementsByTagName("risk");
+                    for (var x = 0; x < rk.length; x++) {
+                        var risk = new Risk(
+                            rk[x].attributes['id'].value,
+                            rk[x].attributes['weight'].value,
+                            rk[x].attributes['name'].value,
+                            rk[x].attributes['label'].value,
+                            rk[x].innerHTML);
+                        risks.push(risk); // symptoms is defined under a global scope
+                    }
+                    console.log(risks);
+
+                    // dynamically generate HTML symptoms checkboxes
+                    var sms = "";
+                    for (var x = 0; x < symptoms.length; x++) {
+                        sms = sms + "<div class='form-group form-check' onmouseover='display_description(" + x + ", 0)' onmouseout='display_description(-1,0)'>";
+                        sms = sms + "<input type='checkbox' class='form-check-input' id='symptom" + symptoms[x].id + "'>";
+                        sms = sms + "<label class='form-check-label' for='symptom" + symptoms[x].id + "'>" + symptoms[x].label + "</label></div>";
+                    }
+                    document.getElementById("container_symptoms").innerHTML = sms;
+                    // dynamically generate HTML risk factors checkboxes
+                    var rks = "";
+                    for (var x = 0; x < risks.length; x++) {
+                        rks = rks + "<div class='form-group form-check' onmouseover='display_description(" + x + ",1)' onmouseout='display_description(-1,1)'>";
+                        rks = rks + "<input type='checkbox' class='form-check-input' id='risk" + risks[x].id + "'>";
+                        rks = rks + "<label class='form-check-label' for='risk" + risks[x].id + "'>" + risks[x].label + "</label></div>";
+                    }
+                    document.getElementById("container_risks").innerHTML = rks;
                 }
             };
             xhttp.open("GET", "data.xml", true);
             xhttp.send();
         }
         // use general output area to display symptom details
-        function display_description(idx) {
+        function display_description(idx, type) {
             if (Number(idx) >= 0) {
-                document.getElementById("details").innerHTML = symptoms[idx].description;
+                if (type == 0) {
+                    document.getElementById("details").innerHTML = symptoms[idx].description;
+                } else {
+                    document.getElementById("details").innerHTML = risks[idx].description;
+                }
             } else {
-                document.getElementById("details").innerHTML= "";
+                document.getElementById("details").innerHTML = "";
             }
         }
     </script>
@@ -184,32 +244,11 @@
             <!-- recommendation output area -->
             <div id="details">
             </div>
-
-            <div class="form-group form-check" onmouseover="display_description(0)" onmouseout="display_description(-1)">
-                <input type="checkbox" class="form-check-input" id="symptom1">
-                <label class="form-check-label" for="symptom1">I have
-                    fever.</label>
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="symptom2">
-                <label class="form-check-label" for="symptom2" onmouseover="display_description(1)" onmouseout="display_description(-1)">I am
-                    coughing.</label>
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="symptom3">
-                <label class="form-check-label" for="symptom3" onmouseover="display_description(2)" onmouseout="display_description(-1)">I have shortness of
-                    breath.</label>
+            <div id="container_symptoms">
             </div>
             <!-- risk assessment -->
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="risk1">
-                <label class="form-check-label" for="risk1">I recently traveled by airplane.</label>
+            <div id="container_risks">
             </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="risk2">
-                <label class="form-check-label" for="risk2">I recently had contact with a COVID-19 patient.</label>
-            </div>
-
             <button type="button" class="btn btn-primary" onclick="process_form()">Submit</button>
             <!-- recommendation output area -->
             <div id="output">
