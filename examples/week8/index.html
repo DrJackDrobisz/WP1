@@ -148,7 +148,7 @@
             var score = patient.score();
         }
 
-        // load symptom and risk data from the xml file
+        // load symptom data from the xml file
         function load_data() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -164,7 +164,7 @@
                             sm[x].innerHTML);
                         symptoms.push(symptom); // symptoms is defined under a global scope
                     }
-                    //console.log(symptoms);
+                    console.log(symptoms);
                     var rk = this.responseXML.getElementsByTagName("risk");
                     for (var x = 0; x < rk.length; x++) {
                         var risk = new Risk(
@@ -175,7 +175,7 @@
                             rk[x].innerHTML);
                         risks.push(risk); // symptoms is defined under a global scope
                     }
-                    //console.log(risks);
+                    console.log(risks);
 
                     // dynamically generate HTML symptoms checkboxes
                     var sms = "";

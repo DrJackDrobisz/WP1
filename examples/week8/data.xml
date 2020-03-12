@@ -17,8 +17,5 @@
         <risk id="2" weight="1.00" name="contact" label="I recently had contact with a COVID-19 patient.">
             People who had contact with CONFIRMED COVID-19 patients or share the same space are at much higher risk of infection.
         </risk>
-        <risk id="3" weight="1.00" name="smoker" label="I smoke.">
-            People who smoke are at higher risk.
-        </risk>
     </risks>
 </covid-19>
