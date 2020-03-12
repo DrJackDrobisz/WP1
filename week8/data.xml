@@ -11,7 +11,7 @@
         </symptom>
     </symptoms>
     <risks>
-        <risk id="1" weight="0.25" name="airplane" label="I have recently traveled by airplane.">
+        <risk id="1" weight="0.25" name="travel" label="I have recently traveled by airplane.">
             People who have traveled by airplane, especially abroad, are at higher risk of COVID-19 infection.
         </risk>
         <risk id="2" weight="1.00" name="contact" label="I recently had contact with a COVID-19 patient.">

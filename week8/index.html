@@ -1,6 +1,13 @@
 <!doctype html>
 <html lang="en">
-<!-- this is week 7 in-class example of JS object implementation, forms, bootstrap, etc. -->
+<!-- this is week 8 in-class example of JS arrays and loops as well as XML file load -->
+<!-- 
+NOTICE: This code contains some advanced examples which are not meant to serve as a template for
+your next assignment.
+
+However, you may use forementioned code should you decide to load some content from an external XML file
+in your final project.  If you do, you may have to deal with CORS-related issues, so let me know.
+-->
 
 <head>
     <!-- Required meta tags -->
@@ -59,18 +66,29 @@
         // Patient Object definition
         function Patient(fm) {
             // constructor
-            this.symptom = new Array();
-            this.risk = new Array();
+            this.symptom = new Array(); // array of true/false values corresponding to symptoms
+            this.risk = new Array(); // array of true/false vales corresponding to risk factors
 
             this.name = fm.name.value;
             this.email = fm.email.value;
             this.age = Number(fm.age.value);
-            this.symptom[0] = fm.symptom1.checked; // fever
-            this.symptom[1] = fm.symptom2.checked; // cough
-            this.symptom[2] = fm.symptom3.checked; // breath
-            this.risk[0] = fm.risk1.checked; // travel
-            this.risk[1] = fm.risk2.checked; // contact
+            /*  since syptom and riks checkboxes are now created dynamically,
+                we will use arrays instead of variables to store this data
+            */
+            // extract a list of checkboxes from the div
+            var list_symptom = document.querySelectorAll("#container_symptoms input[type='checkbox']");
+            // traverse the list and set patient's symptom to true/false value
+            for (var x=0; x < list_symptom.length; x++) {
+                this.symptom[x] = list_symptom[x].checked;
+            }
+            // do the same for risks
+            var list_risk = document.querySelectorAll("#container_risks input[type='checkbox']");
+            // traverse the list and set patient's risk to true/false value
+            for (var x=0; x < list_risk.length; x++) {
+                this.risk[x] = list_risk[x].checked;
+            }
             //console.log(this.symptom);
+            //console.log(this.risk);
 
             // return potential severity color of this case
             this.severity = function () {
@@ -89,6 +107,20 @@
             }
             // return recommendation text
             this.diagnose = function () {
+                /*  NOTE: We have changed the initial code to load SYMPTOMS and RISKS from an XML file.
+                    The original logic below hasn't changed and it EXPECTS:
+                        symptom [0]=fever, [1]=cough, [2]=breath, AND risk [0]=travel, [1]=contact.
+                    All other risks are currently not used to determin threat levels and make recommendations.
+
+                    The following logic/code would have to change accomodate a variable (and potentially large) number of SYMPTOMS and RISKS as mentioned in class.
+                    One possible approach would be to use weights with decision trees.
+                    Another approach might involed deep learning with neural networks.
+                    Both of these are advanced topics which will not be covered in this course, but are worth exploring by those
+                    students who are interested in pursuing software development careers.
+
+                    I will leave any modificatios of this method to student who are ready for this type of challenge.
+                */
+
                 // if NONE of symptoms are present but they have been potentially exposed
                 if (!(this.symptom[0] || this.symptom[1] || this.symptom[2]) && this.risk[1]) {
                     return "You do not show any symptoms, however, if you suspect that you might have been exposed to COVID-19 then please contact your local authories or call the CDC COVID-19 hotline at 555-555-5555.";
@@ -113,25 +145,29 @@
                     return "You seem to be fine.  Keep washing your hands!";
                 }
             }
-            // return patient potential threat score (real number)
+            // return patient potential threat score (real number) - this is just an example of what you can do with symptom and risk weights.
             this.score = function () {
                 var score_s = 0.0;
                 var score_r = 0.0;
+                // for all symptoms (loaded from the XML file)
                 for (var x = 0; x < symptoms.length; x++) {
-                    if (this.symptom[x]) {
-                        score_s += Number(symptoms[x].weight);
+                    if (this.symptom[x]) { // if patient has this symptom
+                        score_s += Number(symptoms[x].weight); // then add the weight to their total
                     }
                 }
+                // for all risks (loaded from the XML file)
                 for (var x = 0; x < risks.length; x++) {
-                    if (this.risk[x]) {
-                        score_r += Number(risks[x].weight);
+                    if (this.risk[x]) { // if patient has this risk
+                        score_r += Number(risks[x].weight); // then add the weight to their total
                     }
                 }
+                // These scores could be used in some logic, for example to determine threat levels.  For now we just output them to console.
                 console.log("DEBUG: score_s=" + score_s + " score_r=" + score_r);
                 return score_s + score_r;
             }
         }
 
+        // process the form data upon submit
         function process_form() {
             // get form object
             var fm = document.getElementById("my_form");
@@ -148,7 +184,7 @@
             var score = patient.score();
         }
 
-        // load symptom and risk data from the xml file
+        // load symptom and risk data from the xml file - executed automatically when body is loaded
         function load_data() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -255,10 +291,7 @@
             </div>
 
         </form>
-
-
     </div>
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
