@@ -1,0 +1,550 @@
+<html>
+<head>
+<script type="text/javascript">
+
+/*
+ * This program will test how quickly people can recognize random correct or incorrect sentences
+
+ A Simple Grammar: 
+
+	 Types of words
+	 Noun Ð N
+	 Proper noun - PN
+	 Verb - V
+	 Adjective Ð AJ
+	 Adverb - AV
+	 Interrogative Ð I : who what who how will (will may be needed to some of these.)
+	 Preposition Ð P
+	 Conjunction Ð C : like ÒandÓ
+
+	 Types of phrases:
+	 Noun phrase Ð NP
+	 Verb phrase - VP
+	 Interrogative Phrase Ð IP : what will, ?
+	 Prepositional Phrase Ð PP, in a basket, with a gun, etc.
+
+	 S ::= NP VP .  | NP VP ?  | IP VP ? | VP .
+
+	 NP ::= N | AJ N | N PP | NP C NP
+
+	 VP ::= V | V AV | V NP | V PP
+
+	 IP ::= I V | ??
+
+	 PP ::= P | P NP 
+
+ */
+
+ /* Now let's do it with GLOBAL VARIABLES AND ALLOW THE USER TO ADD TO LEXICONS
+  *
+  *  GLOBALS - the words, nouns, verbs, etc. 
+  */
+	var properNouns = ["Barry","Alfredrick","Jennifer", "Mona"]; /*,"Katie", "Johan", "Melissa","Tom","Cindi", "Maria"]; */
+ 	var verbs = ["goes","tells","dances", "jumps","walks","talks","eats"]; /*, "eats", "sings", "knows","hits","sings", "learns", "swims"]; */
+ 	var pluralVerbs = ["go","tell", "jump"]; /*, "eat", "swim", "sleep"]; */
+ 	var adjectives = ["green","slimely","vociferous","hungry", "outrageous","healthy", "sick","silly", "sarcastic"];
+ 	var adverbs = ["quickly","slatternly","sadly", "weirdly", "stupidly"];
+ 	var interrogatives = ["who","what", "where", "when", "how"];
+ 	var prepositions = ["with","to", "on", "from"];
+ 	var conjunctions = ["and"];  /* Could add ,"for", "nor", "but", "or", "yet", "so" ? */
+ 	var nouns = [ "skink", "skunk","dog","student","doctor","professor","platypus"]; /* "dog","cat", "teacher", "student", "store", "pool", */
+	var plural = false;
+
+	/* use variable arrays to add a noun to the lexicon.
+	 */
+	
+	function addNoun()
+	{
+		var newNoun;
+		newNoun = prompt("Please enter a new noun to add to the lexicon");
+		nouns[nouns.length] = newNoun;
+	}
+	
+	function replaceNoun()
+	{
+		var newNoun, i;
+		
+		newNoun = prompt("Please enter a new noun to add to the lexicon");
+		i = prompt("Enter the index for the noun to replace");
+		
+		nouns[Number(i)] = newNoun;
+	}
+	
+	function addVerb()
+	{
+		var newVerb;
+		newVerb = prompt("Please enter a new verb to add to the lexicon");
+		verbs[verbs.length] = newVerb;
+	}
+	
+/* Functions to return each of these categories
+ * Proper noun - PN
+ * Verb - V
+ * Adjective Ð AJ
+ * Adverb - AV
+ * Interrogative Ð I : who what who how will (will may be needed to some of these.)
+ * Preposition Ð P
+ * Conjunction Ð C : like ÒandÓ
+ */
+ function randomProperNoun()
+ {
+ 	var str1 = " ";
+ 	
+ 	str1 = randomStringFromArray(properNouns);
+
+ 	
+ 	return str1;	
+ }
+ 
+ function randomVerb()
+ {
+ 	var str1 = " ";
+ 	
+ 	str1 = randomStringFromArray(verbs);
+ 
+ 	
+ 	return str1;	
+ }
+ 
+ function randomPluralVerb()
+ {
+ 	var str1 = " ";
+ 	
+ 	str1 = randomStringFromArray(pluralVerbs);
+ 
+ 	
+ 	return str1;	
+ }
+ 
+ function randomAdjective()
+ {
+ 	var str1 = " ";
+ 	
+ 	str1 = randomStringFromArray(adjectives);
+ 	
+ 	return str1;	
+ }
+ 
+ function randomAdverb()
+ {
+ 	var str1 = " ";
+ 	
+ 	str1 = randomStringFromArray(adverbs);
+ 
+ 	
+ 	return str1;	
+ }
+ 
+ function randomInterrogative()
+ {
+ 	var str1 = " ";
+ 	
+ 	str1 = randomStringFromArray(interrogatives);
+ 
+ 	
+ 	return str1;	
+ }
+ 
+ function randomPreposition()
+ {
+ 	var str1 = " ";
+ 	
+ 	str1 = randomStringFromArray(prepositions);
+ 
+ 	
+ 	return str1;	
+ }
+ 
+ function randomPrepositionPhrase()
+ {
+ 	var str1 = " ";
+ 	
+ 	str1 += randomPreposition() + " " + randomArticle() + " " + randomNoun();	
+ 	return str1;	
+ }
+ 
+ function randomConjunction()
+ {
+ 
+ 	var str1 = " ";
+ 	
+ 	str1 = randomStringFromArray(conjunctions);
+ 
+ 	
+ 	return str1;	
+ }
+ 
+ 
+ /* RETURN A RANDOM NOUN.. 
+ */
+ 
+ function randomNoun()
+ {
+ 	var str1 = " ";
+ 	
+ 	str1 = randomStringFromArray(nouns);
+
+ 	
+ 	return str1;	
+ }
+ 
+ /* RETURN A RANDOM ARTICLE.. 
+  */
+  
+  function randomArticle()
+  {
+  	var articles = ["a","the"];
+  	var str1 = " ";
+  	
+  	str1 = randomStringFromArray(articles);
+
+  	
+  	return str1;	
+  }
+ 
+/* write out a random noun
+*/
+
+function writeRandomNoun()
+{
+	 	var str1 = " ";
+	 	
+	 	str1 = randomNoun();
+
+	 	writeText(str1);	
+}
+
+
+/*
+ * return a random sentence
+
+ S ::= NP VP .  | NP VP ?  | IP VP ? | VP .
+
+ NP ::= N | AJ N | N PP | NP C NP
+
+ VP ::= V | V AV | V NP | V PP
+
+ IP ::= I V | ??
+
+ PP ::= P | P NP 
+ */
+function randomCorrectSentence()
+ {
+	var sentenceType, holdNounPhrase, sentence = "";
+	
+	sentenceType = GetRandomRange(1, 4);
+ 
+	/*alert("In function randomCorrectSentence. Sentence type is: " + sentenceType);
+	*/
+	
+	
+	switch (sentenceType) 
+	{
+	case 1:
+		/*alert("In switch - sentence type: " + sentenceType);
+		*/
+		sentence += randomNounPhrase() + " " ;
+		if (plural) 	
+			sentence +=  randomPluralVerbPhrase() + "."; 
+		else 
+			sentence +=  randomVerbPhrase() + ".";
+		
+		break;
+	
+	case 2:
+		/*alert("In switch - sentence type: " + sentenceType);
+		*/
+		sentence += randomNounPhrase() + " " ;
+		if (plural) 	
+			sentence +=  randomPluralVerbPhrase() + "?";	
+		else 
+			sentence +=  randomVerbPhrase() + "?";
+		break;
+		
+	case 3:
+		/*alert("In switch - sentence type: " + sentenceType);
+		*/
+		sentence += randomInterrogativePhrase() + " ";
+		
+		holdNounPhrase = randomNounPhrase();
+		if (plural)
+			sentence += randomPluralVerbPhrase() + " ";
+		else
+			sentence += randomVerbPhrase() + " ";
+		
+		sentence +=  holdNounPhrase + "?"
+		break;
+	
+	case 4:
+		/*alert("In switch - sentence type: " + sentenceType);
+		*/
+		sentence += randomPluralVerbPhrase() + "!";
+
+		
+		break;		
+	}
+	
+	
+	
+	return sentence;
+ }
+ 
+ /*
+  * NP ::= N | AJ N | N PP | N C N
+  * for now leaving out NP C NP, to avoid recursion
+  */
+ 
+  function randomNounPhrase()
+  {
+ 		var phraseType, phrase = "";
+ 		
+ 		phraseType = GetRandomRange(1, 5);
+ 	 
+ 		/*alert("In function randomNounPhrase. Phrase type is: " + phraseType);*/
+ 		
+ 		plural = false;
+ 		
+ 		switch (phraseType) 
+ 		{
+ 		case 1:
+ 			/*alert("In switch - sentence type: " + phraseType);
+ 			*/
+ 			phrase += randomArticle() + " " + randomNoun() + " ";
+ 			
+ 			break;
+ 		
+ 		case 2:
+ 			/*alert("In switch - sentence type: " + phraseType);
+ 			*/
+ 			phrase += randomArticle() + " " + randomAdjective() + " " + randomNoun() + " ";
+ 			
+ 			break;
+ 			
+ 		case 3:
+ 			/*alert("In switch - sentence type: " + phraseType);
+ 			*/
+ 			phrase += randomArticle() + " "  + randomNoun() + " " + randomPrepositionPhrase() + " ";
+
+ 			
+ 			break;
+ 		
+ 		case 4:
+ 			/*alert("In switch - sentence type: " + phraseType);
+ 			*/
+ 			phrase += randomArticle() + " " + randomNoun() + " " + randomConjunction() + " " + randomArticle() + " " + randomNoun();
+			plural = true;
+ 			
+ 			break;
+ 		case 5:
+ 			/*alert("In switch - sentence type: " + phraseType);
+ 			*/
+ 			phrase +=  randomProperNoun();
+
+ 			
+ 			break;
+ 		}
+ 		
+ 		
+ 		return phrase;
+  }
+  
+  /*
+   *  VP ->  V | V AV | V NP | V PP
+   */
+ 
+  function randomVerbPhrase()
+  {
+ 		var phraseType, phrase = "";
+ 		
+ 		phraseType = GetRandomRange(1, 4);
+ 	 
+ 		/* alert("In function randomVerbPhrase. Phrase type is: " + phraseType);
+ 		*/
+ 		
+ 		switch (phraseType) 
+ 		{
+ 		case 1:
+ 			
+ 			phrase += randomVerb() + " ";
+ 			
+ 			break;
+ 		
+ 		case 2:
+ 		
+ 			phrase += randomVerb() + " " + randomAdverb() + " ";
+ 			
+ 			break;
+ 			
+ 		case 3:
+ 		
+ 			phrase += randomVerb() + " " + randomNounPhrase() + " ";
+
+ 			
+ 			break;
+ 		
+ 		case 4:
+ 			
+ 			phrase += randomVerb() + " " + randomPrepositionPhrase() + " ";
+ 			
+ 			break;		
+ 		}
+ 		
+ 		
+ 		return phrase;
+  }
+ 
+   /*
+    *  VP ->  V | V AV | V NP | V PP
+    */
+  
+   function randomPluralVerbPhrase()
+   {
+  		var phraseType, phrase = "";
+  		
+  		phraseType = GetRandomRange(1, 4);
+  	 
+  		/* alert("In function randomVerbPhrase. Phrase type is: " + phraseType);
+  		*/
+  		
+  		switch (phraseType) 
+  		{
+  		case 1:
+  			
+  			phrase += randomPluralVerb() + " ";
+  			
+  			break;
+  		
+  		case 2:
+  		
+  			phrase += randomPluralVerb() + " " + randomAdverb() + " ";
+  			
+  			break;
+  			
+  		case 3:
+  		
+  			phrase += randomPluralVerb() + " " + randomNounPhrase() + " ";
+
+  			
+  			break;
+  		
+  		case 4:
+  			
+  			phrase += randomPluralVerb() + " " + randomPrepositionPhrase() + " ";
+  			
+  			break;		
+  		}
+  		
+  		
+  		return phrase;
+   }
+    
+ function randomInterrogativePhrase()
+ {
+	 return randomInterrogative();
+ }
+ 
+  
+/*
+ * write a random sentence
+ */
+
+function writeRandomCorrectSentence()
+ {
+
+ 	var str1 = " ";
+ 	
+ 	/*alert ("In writeRandomCorrectSentence");
+ 	*/
+ 	
+ 	str1 = randomCorrectSentence();
+
+ 	writeText(str1);	
+ 
+ }
+ 
+ 
+
+
+/*
+ * LIBRARY OF FUNCTIONS to be used for ASG 4, randomness and tiimers
+ */
+
+ /*
+  * Function to return an integer in a certain range that is speficied in range speficied by the two paramaters, upper and lower
+  */
+ function GetRandomRange(lower, upper)
+ {
+ var length, aNumber;
+
+ length = upper - lower;
+ aNumber = Math.random();
+ aNumber = aNumber * (length + 1);
+ while (aNumber >= (length + 1))
+ 	{
+ 	aNumber = Math.random();
+ 	aNumber = aNumber * (length + 1);
+ 	}
+ aNumber = Math.floor(aNumber + lower);
+ return aNumber;
+
+ }
+ 
+ 
+ /*
+  * Return random string from an array of strings
+  */
+  function randomStringFromArray(anArray)
+  {
+ 	var aString;
+ 	 
+ 	aString = anArray[GetRandomRange(0, (anArray.length - 1))];
+ 	/*
+ 	alert("the random string from an array of stings that will be returned is " + aString);
+ 	*/
+ 	return aString;
+  }
+  
+  
+
+   /*
+    * write test to the desc area
+    */
+   function writeText(txt)
+   {
+   document.getElementById("desc").innerHTML=txt;
+   }
+
+   
+  /*
+   * Also, need time out function(s)... 
+   */
+ 
+</script>
+</head>
+<!-- D8F0D4 -->
+<body  bgcolor="#D8F0D4">
+<img src ="HeadTest.jpg" width ="218" height ="241" alt="mechanical man"  />
+<h1>Write to me, Leonard, mechanical man!</h1>
+<BR>
+<!-- Here is where we will write text to -->
+<H2>
+<I>
+<p id="desc">Here is where sentences will appear.</p>
+</I>
+</H2>
+<!-- Here is a form in which we put buttons -->
+<FORM NAME="MyForm">
+
+	<BR>
+	Click here to get random sentence from a subset of English grammar<input type="button" onclick="writeRandomCorrectSentence()" value="Make Leonard write" />
+	<BR>
+	Click here to add a noun <input type="button" onclick="addNoun()" value="add a noun" />	
+	<BR>
+	Click here to add a verb <input type="button" onclick="addVerb()" value="add a verb" />	
+	<BR>
+	Click here to replace a noun <input type="button" onclick="replaceNoun()" value="replace a noun" />	
+</FORM>
+
+
+</body>
+</html>

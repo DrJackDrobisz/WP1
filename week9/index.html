@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script>
+        function my_display(my_div, str) {
+            my_div.innerHTML = str;
+        }
+
+        function my_random() { 
+            var rnd = Math.random();
+            rnd = rnd * 10; // to get 0-9 plus fraction
+            rnd = Math.ceil(rnd); // to get 1-10
+            my_display(document.getElementById("random_display"), rnd);
+        }
+
+        function my_date() { 
+            var dt = new Date(); // get current date and time
+            var t = dt.getTime(); // extract time from the dt object i.e., miliseconds since 1970/01/01
+            t = Math.ceil(t / 1000); // to get seconds
+
+            var year=  dt.getFullYear();
+            var month = dt.getMonth() + 1; // range 0 - 11
+            var day = dt.getDate(); // this return the day of the month
+
+            my_display(document.getElementById("date_display"), year+"-"+month+"-"+day);
+        }
+    </script>
+    <style>
+        #random_display {
+            font-weight: bold;
+        }
+
+        #date_display {
+            font-weight: bold;
+        }
+
+        .container {
+            margin-top: 10%;
+            text-align: center;
+        }
+    </style>
+
+    <title>Random & Dates</title>
+  </head>
+  <body>
+    <div class="container">
+        <h1>Random & Date sandbox</h1>
+        <p>&nbsp;</p>
+        <button type="button" class="btn btn-primary" onclick="my_random()">Randomize</button>
+        <p>&nbsp;</p>
+        <div id="random_display">
+            Nothing
+        </div>
+        <p>&nbsp;</p>
+        <button type="button" class="btn btn-primary" onclick="my_date()">Dateomize</button>
+        <p>&nbsp;</p>
+        <div id="date_display">
+            Nothing
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

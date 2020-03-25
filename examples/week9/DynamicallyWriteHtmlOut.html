@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div {
+    background-color: lightblue;
+    width: 200px;
+    padding: 25px;
+    border: 25px solid navy;
+}
+</style>
+<script>
+//The goal has been to create a simple attendance report based on user input. Not as easy as it sounds
+ 
+//get number of students, wish I knew how to base this number via a delimiter like a comma, but this method will probably result in less user errors. I know how to do it due the inclass examples
+
+ // create new array to store student names and quantity
+ 
+var studentnames = new Array ();
+var numbStudents = new Array ();
+   
+function getNumStudents()
+    {
+
+        //prompt for number of students, making sure that it is great than 1
+        do
+        {
+        numbStudents = prompt("Enter how many students, must be more than one");
+        }
+        while (numbStudents <= 1);
+        
+        var text = "";
+        
+        //via user input collect the student names      
+        //use a *for* loop to prompt for the names of students
+        /* the array studentnames is now used to hold the names of students, and those student names will be written out below in check boxes*/
+    
+        for (var i = 0; i < numbStudents; i++) 
+        { 
+           
+        //an array for studentnames      
+        studentnames[i] =  prompt("Next student please");
+              
+        //how many boxes of each flavor
+        //numbStudents[i] = prompt("Enter how many boxes");
+
+        text = text +  "<input type='checkbox' id='vehicle' name='students' value =  '" + studentnames[i] + "' >" + studentnames[i] + "<br>" ;
+         
+    
+        }
+         
+        //write report?
+        
+        document.getElementById("demo").innerHTML =  text;
+              
+    }
+
+
+/*
+Check student attendance and write a brief report on the web page. 
+*/
+
+var students = new Array();
+
+function studentAttendance()
+{
+    for (var i = 0; i < numbStudents; i++)
+        {
+         if (document.locomotion.students[i].checked) 
+         {
+             students[i] = studentnames[i] +  " is present ";
+         }
+            else  
+            {
+                students[i] = studentnames[i] + " is absent ";
+            }
+            
+        }
+    document.getElementById("demo").innerHTML = students;
+        
+    }
+ 
+    /* the array studentnames is now used to hold the names of students, and those student names will be written out below in check boxes
+    */
+    
+
+// reveal divs of students and try to increment position with conditional wrapper
+function displaygrid(){
+    var arr = new Array('student1', 'student2', 'student3');
+    for (i=0;i<arr.length;i++){
+    document.write('<style>#'+arr[i]+'{display:none;}</style>');
+    };
+    }
+</script>
+</head>
+<body>
+
+ <!-- Button is an Event handler to call getStudentNum function-->
+<input type="button" name="button" onclick="getNumStudents()"value="Get students"/> 
+
+
+    <form name="locomotion">
+    <p id="demo"> Text will go here </p>
+    <p>Click on names of students present, then button Attendance Report</p>
+    <p id="demo1">  </p> 
+    </form>
+
+    <input type="button" name="button" onclick="studentAttendance()"value="Attendence"/>
+
+
+
+<div>
+<!-- name to be replaced -->
+<p>Student Name dynamically replace</p>
+<!-- reveal checkboxes -->
+
+ 
+</div>
+
+<div id="student1">
+Student Name 
+</div>
+<div id="student2">
+Student Name 
+</div>
+<div id="student3">
+Student Name 
+</div>
+
+</body>
+</html>
