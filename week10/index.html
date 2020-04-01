@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Get Wise!</title>
+    <style>
+        h1 {
+            text-align: center;
+            font-family: 'Lobster', cursive;
+        }
+
+        h3 {
+            text-align: center;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        /*the wisdom display on the screen*/
+        #fortune {
+            padding-left: 100px;
+            text-align: center;
+            font-size: 20pt;
+            font-weight: lighter;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .button {
+            text-align: center;
+        }
+    </style>
+    <script>
+        var fortunes = [
+            "Law and technology produce, together, a kind of regulation of creativity we've not seen before. (Lawrence Lessig)",
+            "Technologies are not merely aids to human activity, but also powerful forces acting to reshape that activity and its meaning. (Langdon Winner)",
+            "In the technical realm, we repeatedly enter into a series of social contracts, the terms of which are revealed only after the signing. (Langdon Winner)",
+            "The role of the teacher is to create the conditions for invention rather than provide ready-made knowledge. (Seymour Papert)",
+            "You can't teach people everything they need to know. The best you can do is position them where they can find what they need to know when they need to know it. (Seymour Papert)",
+            "We need to produce people who know how to act when they are faced with situations for which they were not specifically prepared. (Seymour Papert)",
+            "Most learning is not the result of instruction. It is rather the result of unhampered participation in a meaningful setting. (Ivan Illich)",
+            "School has become the world religion of the modern proleteriat, and makes futile promises of salvation to the poor of the technological age. (Ivan Illich)",
+            "Schools are designed on the assumption that there is a secret to everything in life; that the quality of life depends on knowing that secret; that secrets can be known only in orderly successions; and that only teachers can properly reveal these secrets. (Ivan Illich)",
+            "The technologies do not themselves make culture participatory. People do. (Mimi Ito)",
+            "Schools are an important piece of young people's learning ecology, but we have to take social peer engagement and the diverse interests of kids seriously. (Mimi Ito)"
+        ];
+
+        var prev_i = -1; // initialize previous index to -1
+        var i = 0;
+
+        function process_click() {
+            console.log("DEBUG: prev_i=" + prev_i);
+
+            //math.floor(Math.random()) returns a random integer 0-10
+            while (i == prev_i) {
+                i = (Math.floor(Math.random() * fortunes.length));
+            }
+            // set the value of previous index to the currently selected index
+            prev_i = i;
+
+            //picks fortune and assigns it to var fortunes
+            var fortune = fortunes[i];
+
+            document.getElementById("fortune").innerHTML = "#" + i + " - " + fortune;
+        }
+    </script>
+</head>
+
+<body>
+    <!--background container-->
+    <div class="fluid-container">
+        <div class="jumbotron text-center">
+            <img src="digital_media.jpg" alt="people talking using various technology" width="80%">
+        </div>
+        <h1>Welcome to My Digital Media Scholar Randomizer</h1>
+
+        <h3>Scroll down to see the Wisdom of the Scholars</h3>
+
+        <!--div for fortune output-->
+        <div id="main">
+            <div id="fortune">The Wisdom of the Scholars Awaits...</div>
+            <!--button for get fortune-->
+        </div>
+        <div class="button">
+            <button type="button" class="btn btn-primary" onclick="process_click()">Receive Wisdom</button>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
